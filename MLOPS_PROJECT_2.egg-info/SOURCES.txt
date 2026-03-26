@@ -2,8 +2,11 @@ setup.py
 MLOPS_PROJECT_2.egg-info/PKG-INFO
 MLOPS_PROJECT_2.egg-info/SOURCES.txt
 MLOPS_PROJECT_2.egg-info/dependency_links.txt
+MLOPS_PROJECT_2.egg-info/requires.txt
 MLOPS_PROJECT_2.egg-info/top_level.txt
 src/__init__.py
 src/custom_exception.py
+src/data_ingestion.py
 src/logger.py
 utils/__init__.py
+utils/cummon_functions.py
