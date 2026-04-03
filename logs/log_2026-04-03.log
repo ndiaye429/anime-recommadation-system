@@ -1,0 +1,13 @@
+2026-04-03 10:20:45,143 - INFO - DataProcessing Intialized
+2026-04-03 10:20:47,948 - INFO - Data loaded sucesfully for Data Processing
+2026-04-03 10:20:48,320 - INFO - Filtered users sucesfully...
+2026-04-03 10:20:50,738 - INFO - Scalind done for Processing 
+2026-04-03 10:20:51,016 - INFO - Encoding done for Users and Anime
+2026-04-03 10:20:51,834 - INFO - Data splitted sucesfullyy
+2026-04-03 10:20:51,858 - INFO - user2user_encoded saved sucesfully in processed directory
+2026-04-03 10:20:51,881 - INFO - user2user_decoded saved sucesfully in processed directory
+2026-04-03 10:20:51,968 - INFO - anim2anime_encoded saved sucesfully in processed directory
+2026-04-03 10:20:52,054 - INFO - anim2anime_decoded saved sucesfully in processed directory
+2026-04-03 10:21:02,421 - INFO - ALl the training testing data as well as rating_df is saved now..
+2026-04-03 10:21:17,808 - INFO - DF AND SYNOPSIS_Df saved sucesfullyy...
+2026-04-03 10:21:17,812 - INFO - Data Processing Pipeline Run sucesfully .... Congrats
