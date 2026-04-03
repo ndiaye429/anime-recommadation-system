@@ -11,3 +11,15 @@
 2026-04-03 10:21:02,421 - INFO - ALl the training testing data as well as rating_df is saved now..
 2026-04-03 10:21:17,808 - INFO - DF AND SYNOPSIS_Df saved sucesfullyy...
 2026-04-03 10:21:17,812 - INFO - Data Processing Pipeline Run sucesfully .... Congrats
+2026-04-03 11:10:13,909 - INFO - Model Training initialized..
+2026-04-03 11:10:14,058 - INFO - Data loaded sucesfully for Model Trainig
+2026-04-03 11:10:14,220 - INFO - Succesfully read the YAML file
+2026-04-03 11:10:14,220 - INFO - Loaded configuration from config.yaml
+2026-04-03 11:10:14,661 - WARNING - TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.
+2026-04-03 11:10:14,670 - INFO - Model created sucesfully....
+2026-04-03 11:11:33,772 - INFO - Model training Completedd.....
+2026-04-03 11:11:33,772 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2026-04-03 11:11:33,849 - INFO - Model saved to artifacts/model\model.h5
+2026-04-03 11:11:33,855 - INFO - Extracting weights for user_embedding
+2026-04-03 11:11:33,872 - INFO - Extracting weights for anime_embedding
+2026-04-03 11:11:33,893 - INFO - User and Anime weights saved sucesfully....
