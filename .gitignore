@@ -1,3 +1,4 @@
 artifacts/
 venv/
 .env/
+MLOPS_PROJECT_2.egg-info/
