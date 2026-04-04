@@ -7,3 +7,4 @@ tensorflow
 joblib
 comet-ml
 python-dotenv
+dvc-gs
