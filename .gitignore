@@ -1,4 +1,8 @@
-artifacts/
 venv/
-.env/
+artifacts/raw/
+artifacts/processed/
+artifacts/weights/
+artifacts/model
+artifacts/model_checkpoint/
 MLOPS_PROJECT_2.egg-info/
+.env/
