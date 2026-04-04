@@ -1,0 +1,30 @@
+2026-04-04 01:34:44,337 - INFO - Model Training & COMET ML initialized..
+2026-04-04 01:34:44,594 - INFO - Data loaded sucesfully for Model Trainig
+2026-04-04 01:34:44,797 - INFO - Succesfully read the YAML file
+2026-04-04 01:34:44,797 - INFO - Loaded configuration from config.yaml
+2026-04-04 01:34:45,082 - WARNING - TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.
+2026-04-04 01:34:45,091 - INFO - Model created sucesfully....
+2026-04-04 01:35:19,241 - INFO - Model Training & COMET ML initialized..
+2026-04-04 01:35:19,345 - INFO - Data loaded sucesfully for Model Trainig
+2026-04-04 01:35:19,409 - INFO - Succesfully read the YAML file
+2026-04-04 01:35:19,409 - INFO - Loaded configuration from config.yaml
+2026-04-04 01:35:19,549 - WARNING - TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.
+2026-04-04 01:35:19,553 - INFO - Model created sucesfully....
+2026-04-04 01:36:26,077 - INFO - Model training Completedd.....
+2026-04-04 01:36:26,077 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2026-04-04 01:36:26,152 - INFO - Model saved to artifacts/model\model.h5
+2026-04-04 01:36:26,157 - INFO - Extracting weights for user_embedding
+2026-04-04 01:36:26,164 - INFO - Extracting weights for anime_embedding
+2026-04-04 01:36:26,180 - INFO - User and Anime weights saved sucesfully....
+2026-04-04 01:40:26,104 - INFO - Model Training & COMET ML initialized..
+2026-04-04 01:40:26,246 - INFO - Data loaded sucesfully for Model Trainig
+2026-04-04 01:40:26,302 - INFO - Succesfully read the YAML file
+2026-04-04 01:40:26,303 - INFO - Loaded configuration from config.yaml
+2026-04-04 01:40:27,363 - WARNING - TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.
+2026-04-04 01:40:27,369 - INFO - Model created sucesfully....
+2026-04-04 01:41:37,680 - INFO - Model training Completedd.....
+2026-04-04 01:41:37,681 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2026-04-04 01:41:37,847 - INFO - Model saved to artifacts/model\model.h5
+2026-04-04 01:41:37,851 - INFO - Extracting weights for user_embedding
+2026-04-04 01:41:37,861 - INFO - Extracting weights for anime_embedding
+2026-04-04 01:41:37,964 - INFO - User and Anime weights saved sucesfully....

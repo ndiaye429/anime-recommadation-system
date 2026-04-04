@@ -1,3 +1,4 @@
+import comet_ml
 import joblib
 import numpy as np
 import os
@@ -6,13 +7,24 @@ from src.logger import get_logger
 from src.custom_exception import CustomException
 from src.base_model import BaseModel
 from config.paths_config import *
+from dotenv import load_dotenv
 
 logger = get_logger(__name__)
+
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
 
 class ModelTraining:
     def __init__(self,data_path):
         self.data_path= data_path
-        logger.info("Model Training initialized..")
+
+        self.experiment = comet_ml.Experiment(
+            api_key=API_KEY,
+            project_name="mlops-course-14",
+            workspace="ndiaye429"
+        )
+        logger.info("Model Training & COMET ML initialized..")
     
     def load_data(self):
         try:
@@ -82,6 +94,9 @@ class ModelTraining:
                 for epoch in range(len(history.history['loss'])):
                     train_loss = history.history["loss"][epoch]
                     val_loss = history.history["val_loss"][epoch]
+
+                    self.experiment.log_metric('train_loss',train_loss,step=epoch)
+                    self.experiment.log_metric('val_loss',val_loss,step=epoch)
             
             except Exception as e:
                 raise CustomException("Model training failedd.....")
@@ -114,6 +129,10 @@ class ModelTraining:
             joblib.dump(user_weights,USER_WEIGHTS_PATH)
             joblib.dump(anime_weights,ANIME_WEIGHTS_PATH)
 
+            self.experiment.log_asset(MODEL_PATH)
+            self.experiment.log_asset(ANIME_WEIGHTS_PATH)
+            self.experiment.log_asset(USER_WEIGHTS_PATH)
+
             logger.info("User and Anime weights saved sucesfully....")
         except Exception as e:
             logger.error(str(e))
@@ -123,11 +142,3 @@ class ModelTraining:
 if __name__=="__main__":
     model_trainer = ModelTraining(PROCESSED_DIR)
     model_trainer.train_model()
-    
-
-
-
-
-        
-
-
