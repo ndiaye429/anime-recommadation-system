@@ -5,6 +5,7 @@ pipeline {
         VENV_DIR = 'venv'
         GCP_PROJECT = 'mlops-project-491208'
         GCLOUD_PATH = "/var/jenkins_home/google-cloud-sdk/bin"
+        KUBECTL_AUTH_PLUGIN = "/usr/lib/google-cloud-sdk/bin"
         IMAGE_NAME = "ml-project"
         IMAGE_TAG = "${BUILD_NUMBER}"
     }
@@ -143,6 +144,8 @@ pipeline {
                 echo "Deploying to Kubernetes..."
 
                 export PATH=$PATH:${GCLOUD_PATH}
+
+                export PATH=$PATH:${GCLOUD_PATH}:${KUBECTL_AUTH_PLUGIN}
 
                 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
