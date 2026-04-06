@@ -114,24 +114,28 @@ pipeline {
 
                 gcloud config set project ${GCP_PROJECT}
 
-                docker build -t gcr.io/${GCP_PROJECT}/${IMAGE_NAME}:${IMAGE_TAG} .
+                docker build -t us-central1-docker.pkg.dev/${GCP_PROJECT}/ml-repo/${IMAGE_NAME}:${IMAGE_TAG} .
                 '''
             }
         }
 
-        stage("Push Docker Image") {
+        stage('Push Docker Image') {
             steps {
-                sh '''
-                echo "Pushing Docker image..."
+                script {
+                    retry(3) {
+                    sh '''
+                    echo "Pushing Docker image..."
 
-                export PATH=$PATH:${GCLOUD_PATH}
+                    export PATH=$PATH:${GCLOUD_PATH}
 
-                gcloud auth configure-docker --quiet
+                    gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
 
-                docker push gcr.io/${GCP_PROJECT}/${IMAGE_NAME}:${IMAGE_TAG}
-                '''
+                    docker push us-central1-docker.pkg.dev/${GCP_PROJECT}/ml-repo/${IMAGE_NAME}:${IMAGE_TAG}
+                    '''
             }
         }
+    }
+}
 
         stage("Deploy to Kubernetes") {
             steps {

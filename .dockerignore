@@ -1,0 +1,6 @@
+.git
+.dvc
+artifacts/
+data/
+venv/
+__pycache__
