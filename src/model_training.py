@@ -13,14 +13,14 @@ logger = get_logger(__name__)
 
 load_dotenv()
 
-API_KEY = os.getenv("API_KEY")
+COMET_API_KEY = os.getenv("COMET_API_KEY")
 
 class ModelTraining:
     def __init__(self,data_path):
         self.data_path= data_path
 
         self.experiment = comet_ml.Experiment(
-            api_key=API_KEY,
+            api_key=COMET_API_KEY,
             project_name="mlops-course-14",
             workspace="ndiaye429"
         )
