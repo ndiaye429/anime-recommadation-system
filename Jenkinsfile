@@ -75,6 +75,8 @@ pipeline {
 
                 . ${VENV_DIR}/bin/activate
 
+                export PYTHONPATH=$PYTHONPATH:$(pwd)
+
                 export $(cat .env | xargs)
 
                 python pipeline/training_pipeline.py
