@@ -153,7 +153,7 @@ pipeline {
                 --region us-central1
 
                 kubectl set image deployment/ml-project \
-                ml-project=gcr.io/${GCP_PROJECT}/${IMAGE_NAME}:${IMAGE_TAG}
+                ml-project=us-central1-docker.pkg.dev/${GCP_PROJECT}/ml-repo/${IMAGE_NAME}:${IMAGE_TAG}
 
                 kubectl rollout status deployment/ml-project
                 '''
