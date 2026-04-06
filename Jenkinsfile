@@ -68,21 +68,42 @@ pipeline {
             }
         }
 
-        stage("Train Model") {
-            steps {
+      stage("Train Model") {
+    steps {
+        script {
+
+            def dvcStatus = sh(
+                script: """
+                . ${VENV_DIR}/bin/activate
+                dvc status
+                """,
+                returnStdout: true
+            ).trim()
+
+            if (dvcStatus.contains("up to date")) {
+
+                echo "Model already up to date. Skipping training."
+
+            } else {
+
                 sh '''
                 echo "Training ML model..."
 
                 . ${VENV_DIR}/bin/activate
 
-                export PYTHONPATH=$PYTHONPATH:$(pwd)
+                export PYTHONPATH=$(pwd)
 
-                export $(cat .env | xargs)
+                set -a
+                source .env
+                set +a
 
                 python pipeline/training_pipeline.py
                 '''
+
             }
         }
+    }
+}
 
         stage("Build Docker Image") {
             steps {
