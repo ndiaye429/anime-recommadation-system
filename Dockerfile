@@ -5,7 +5,9 @@ WORKDIR /app
 COPY . .
 
 RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
+
+# installer le package du projet
+RUN pip install --no-cache-dir -e .
 
 EXPOSE 5000
 

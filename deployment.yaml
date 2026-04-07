@@ -17,3 +17,7 @@ spec:
         image: us-central1-docker.pkg.dev/mlops-project-491208/ml-repo/ml-project:PLACEHOLDER
         ports:
         - containerPort: 5000
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
