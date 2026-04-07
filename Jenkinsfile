@@ -102,7 +102,13 @@ pipeline {
 
                 export PATH=$PATH:${GCLOUD_PATH}
 
+                export PATH=$PATH:/usr/local/bin:/usr/bin:/var/jenkins_home/google-cloud-sdk/bin
+
                 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+                which kubectl
+
+                kubectl version --version
 
                 gcloud container clusters get-credentials ${CLUSTER_NAME} --region ${REGION}
 
