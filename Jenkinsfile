@@ -4,7 +4,7 @@ pipeline {
     environment {
         GCP_PROJECT = "mlops-project-491208"
         REGION = "us-central1"
-        CLUSTER_NAME = "ml-app"
+        CLUSTER_NAME = "ml-app-cluster"
 
         IMAGE_NAME = "ml-project"
         IMAGE_TAG = "${BUILD_NUMBER}"
