@@ -14,19 +14,6 @@ spec:
     spec:
       containers:
       - name: ml-app-container
-        image: us-central1-docker.pkg.dev/${GCP_PROJECT}/ml-repo/${IMAGE_NAME}:${IMAGE_TAG}
+        image: us-central1-docker.pkg.dev/mlops-project-491208/ml-repo/ml-project:latest
         ports:
-        - containerPort: 5000  # Replace with the port your app listens on
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: ml-app-service
-spec:
-  type: LoadBalancer
-  selector:
-    app: ml-app
-  ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 5000
+        - containerPort: 5000

@@ -2,120 +2,77 @@ pipeline {
     agent any
 
     environment {
-        VENV_DIR = 'venv'
-        GCP_PROJECT = 'mlops-project-491208'
-        GCLOUD_PATH = "/var/jenkins_home/google-cloud-sdk/bin"
-        KUBECTL_AUTH_PLUGIN = "/usr/lib/google-cloud-sdk/bin"
+        GCP_PROJECT = "mlops-project-491208"
+        REGION = "us-central1"
+        CLUSTER_NAME = "ml-app-cluster"
+
         IMAGE_NAME = "ml-project"
         IMAGE_TAG = "${BUILD_NUMBER}"
+
+        REPOSITORY = "ml-repo"
+
+        GCLOUD_PATH = "/var/jenkins_home/google-cloud-sdk/bin"
+
+        DOCKER_IMAGE = "${REGION}-docker.pkg.dev/${GCP_PROJECT}/${REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}"
     }
 
     stages {
 
-        stage("Clone Repository") {
+        stage('Checkout Code') {
             steps {
-                script {
-                    echo "Cloning repository..."
-                    checkout scmGit(
-                        branches: [[name: '*/main']],
-                        userRemoteConfigs: [[
-                            credentialsId: 'github-token',
-                            url: 'https://github.com/ndiaye429/anime-recommadation-system.git'
-                        ]]
-                    )
-                }
+                echo "Cloning repository..."
+                checkout scm
             }
         }
 
-        stage("Check GCP Authentication") {
+        stage('Setup Environment') {
             steps {
                 sh '''
-                export PATH=$PATH:${GCLOUD_PATH}
+                echo "Setting up Python environment..."
 
-                echo "Checking GCP authentication..."
-                gcloud auth list
-                gcloud config list
-                '''
-            }
-        }
-
-        stage("Create Virtual Environment") {
-            steps {
-                sh '''
-                echo "Creating Python virtual environment..."
-
-                python -m venv ${VENV_DIR}
-
-                . ${VENV_DIR}/bin/activate
+                python3 -m venv venv
+                . venv/bin/activate
 
                 pip install --upgrade pip
-
-                pip install -e .
-
-                pip install dvc python-dotenv
+                pip install -r requirements.txt
                 '''
             }
         }
 
-        stage("DVC Pull") {
+        stage('DVC Pull Data') {
             steps {
                 sh '''
-                echo "Pulling data from DVC..."
+                echo "Pulling dataset with DVC..."
 
-                . ${VENV_DIR}/bin/activate
+                . venv/bin/activate
 
                 dvc pull --force
                 '''
             }
         }
 
-      stage("Train Model") {
-    steps {
-        script {
-
-            def dvcStatus = sh(
-                script: """
-                . ${VENV_DIR}/bin/activate
-                dvc status
-                """,
-                returnStdout: true
-            ).trim()
-
-            if (dvcStatus.contains("up to date")) {
-
-                echo "Model already up to date. Skipping training."
-
-            } else {
-
+        stage('Train Model') {
+            steps {
                 sh '''
                 echo "Training ML model..."
 
-                . ${VENV_DIR}/bin/activate
+                . venv/bin/activate
 
-                export PYTHONPATH=$(pwd)
-
-                set -a
-                source .env
-                set +a
+                export PYTHONPATH=$PYTHONPATH:$(pwd)
 
                 python pipeline/training_pipeline.py
                 '''
-
             }
         }
-    }
-}
 
-        stage("Build Docker Image") {
+        stage('Build Docker Image') {
             steps {
                 sh '''
                 echo "Building Docker image..."
 
                 export PATH=$PATH:${GCLOUD_PATH}
 
-                gcloud config set project ${GCP_PROJECT}
-
-                docker build -t us-central1-docker.pkg.dev/${GCP_PROJECT}/ml-repo/${IMAGE_NAME}:${IMAGE_TAG} .
+                docker build -t ${DOCKER_IMAGE} .
                 '''
             }
         }
@@ -124,41 +81,47 @@ pipeline {
             steps {
                 script {
                     retry(3) {
-                    sh '''
-                    echo "Pushing Docker image..."
+                        sh '''
+                        echo "Pushing Docker image..."
 
-                    export PATH=$PATH:${GCLOUD_PATH}
+                        export PATH=$PATH:${GCLOUD_PATH}
 
-                    gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
+                        gcloud auth configure-docker ${REGION}-docker.pkg.dev --quiet
 
-                    docker push us-central1-docker.pkg.dev/${GCP_PROJECT}/ml-repo/${IMAGE_NAME}:${IMAGE_TAG}
-                    '''
+                        docker push ${DOCKER_IMAGE}
+                        '''
+                    }
+                }
             }
         }
-    }
-}
 
-        stage("Deploy to Kubernetes") {
+        stage('Deploy to Kubernetes') {
             steps {
                 sh '''
                 echo "Deploying to Kubernetes..."
 
                 export PATH=$PATH:${GCLOUD_PATH}
 
-                export PATH=$PATH:${GCLOUD_PATH}:${KUBECTL_AUTH_PLUGIN}
-
                 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
-                gcloud container clusters get-credentials ml-app-cluster \
-                --region us-central1
+                gcloud container clusters get-credentials ${CLUSTER_NAME} --region ${REGION}
 
-                kubectl set image deployment/ml-project \
-                ml-project=us-central1-docker.pkg.dev/${GCP_PROJECT}/ml-repo/${IMAGE_NAME}:${IMAGE_TAG}
+                kubectl set image deployment/ml-app \
+                ml-app-container=${DOCKER_IMAGE}
 
-                kubectl rollout status deployment/ml-project
+                kubectl rollout status deployment/ml-app
                 '''
             }
         }
+    }
 
+    post {
+        success {
+            echo "Pipeline executed successfully!"
+        }
+
+        failure {
+            echo "Pipeline failed!"
+        }
     }
 }
