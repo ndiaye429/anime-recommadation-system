@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: ml-app-container
-        image: us-central1-docker.pkg.dev/mlops-project-491208/ml-repo/ml-project:latest
+        image: us-central1-docker.pkg.dev/mlops-project-491208/ml-repo/ml-project:PLACEHOLDER
         ports:
         - containerPort: 5000

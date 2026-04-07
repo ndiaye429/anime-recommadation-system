@@ -112,6 +112,8 @@ pipeline {
 
                 gcloud container clusters get-credentials ${CLUSTER_NAME} --region ${REGION}
 
+                sed -i "s/PLACEHOLDER/${IMAGE_TAG}/g" deployment.yaml
+
                 kubectl apply -f deployment.yaml
 
                 kubectl set image deployment/ml-app \
