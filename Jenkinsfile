@@ -4,7 +4,7 @@ pipeline {
     environment {
         GCP_PROJECT = "mlops-project-491208"
         REGION = "us-central1"
-        CLUSTER_NAME = "ml-app-cluster"
+        CLUSTER_NAME = "ml-app"
 
         IMAGE_NAME = "ml-project"
         IMAGE_TAG = "${BUILD_NUMBER}"
@@ -111,6 +111,8 @@ pipeline {
                 kubectl version --client
 
                 gcloud container clusters get-credentials ${CLUSTER_NAME} --region ${REGION}
+
+                kubectl apply -f deployment.yaml
 
                 kubectl set image deployment/ml-app \
                 ml-app-container=${DOCKER_IMAGE}
